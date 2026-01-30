@@ -69,6 +69,14 @@ def main(pg_user, pg_pass, pg_host, pg_port, pg_db, year, month, target_table, c
             name=target_table, 
             con=engine, 
             if_exists="append")
+    
+    # added zones ingestion code
+    zones = "https://d37ci6vzurychx.cloudfront.net/misc/taxi_zone_lookup.csv"
+    df_zones = pd.read_csv(zones)
+    df_zones.to_sql(
+        name='zones', 
+        con=engine, 
+        if_exists='replace')
 
 if __name__ == '__main__':
     main()
